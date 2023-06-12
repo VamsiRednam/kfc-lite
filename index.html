@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>KFC online</title>
+
+        <link rel="stylesheet" href="bootstrap-icons.css">
+        <link rel="stylesheet" href="bootstrap.css">
+        <style>
+            body{
+                background-color: rgb(177, 50, 50);
+                
+            }
+        
+        </style>
+        <script>
+            function SubmitClick(){
+            
+                var cName = document.getElementById("txtName").value;
+                if(cName==""){
+                    document.getElementById("nameMsg").innerHTML = "Name Not mentioned"
+
+                }
+                else{
+                    document.getElementById("lblName").innerHTML = document.getElementById("txtName").value;
+                document.getElementById("lblMobile").innerHTML = document.getElementById("txtNum").value;
+
+                var rollerRadio = document.getElementById("optRoller");
+                var burgerRadio = document.getElementById("optBurger");
+
+                var bucketChecked = document.getElementById("optBucket");
+                var plateChecked = document.getElementById("optPlate");
+
+                var mealName = "";
+                var adonName = "";
+
+                var mealCost = "";
+                var adonCost = "";
+
+                if (rollerRadio.checked) {
+                    mealName = rollerRadio.value;
+                    mealCost = 190;
+                }
+                if (burgerRadio.checked) {
+                    mealName = burgerRadio.value;
+                    mealCost = 220;
+                }
+
+                if (!rollerRadio.checked && !burgerRadio.checked && bucketChecked.checked && plateChecked.checked) {
+                    mealName = "No meal selected";
+                    adonName += bucketChecked.value + "<br>" + plateChecked.value + "<br>";
+                    adonCost = 140 + 120;
+                    mealCost = adonCost;
+                } else {
+                    if (bucketChecked.checked) {
+                        adonName += bucketChecked.value + "<br>";
+                        adonCost = 140;
+                        mealCost += adonCost;
+                    }
+                    if (plateChecked.checked) {
+                        adonName += plateChecked.value + "<br>";
+                        adonCost = 120;
+                        mealCost = mealCost + adonCost;
+                    }
+                 }
+
+
+                document.getElementById("lblMeal").innerHTML = mealName;
+                document.getElementById("lblAdon").innerHTML = adonName;
+                document.getElementById("lblTotalAmount").innerHTML = "&#8377;" + mealCost + "/- Only";
+            }
+        }
+   
+
+        </script> 
+    </head>
+    <body class="container-fluid ">
+
+        <header>
+            <img src="kfc-banner.png" width="100%" height="250px">
+        </header>
+        <section>
+            <div class="accordion mt-2" id="kfcOrder">
+                <div class="accordion-item">
+                <div class="accordion-header">
+                    <button class="btn btn-danger accordion-button w-100" data-bs-toggle="collapse" data-bs-target="#customer">
+                        <h3>Customer Details </h3></button>
+                </div>
+                <div id="customer" class="accordion-body accordion-collapse collapse show" data-bs-parent="#kfcOrder" >
+                    <dl>
+                        <dt>Customer Name</dt>
+                        <dd><input type="text" id="txtName" class="form-control"></dd>
+                        <dd id="nameMsg" class="text-danger"></dd>
+                        <dt>Mobile number</dt>
+                        <dd><input type="number" id="txtNum" class="form-control"></dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button class="btn btn-danger accordion-button w-100 " data-bs-toggle="collapse" data-bs-target="#meal">
+                        <h3>Select Your Meal </h3></button>
+                </div>
+                <div id="meal" class="accordion-body accordion-collapse collapse " data-bs-parent="#kfcOrder" >
+                  <div class="row">
+                    <div class="col text-center">
+                        <img src="kfc-fd1.jpg" width="250" height="250">
+                        <div>
+                            <input type="radio" id="optBurger" value="OMG Burger" class="form-check-input" name="meal"> OMG Burger [&#8377;220/-]  
+                        </div>
+
+                    </div>
+                    <div class="col text-center ">
+                        <img src="kfc-fd2.jpg" width="250" height="250">
+                        <div>
+                            <input type="radio" id="optRoller"  value="OMG Roller" class="form-check-input" name="meal"> OMG Roller [&#8377;190/-]
+                        </div>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button class="btn btn-danger accordion-button w-100 " data-bs-toggle="collapse" data-bs-target="#adon">
+                        <h3 >Select Add On's </h3></button>
+                </div>
+                <div id="adon" class="accordion-body accordion-collapse collapse " data-bs-parent="#kfcOrder" >
+                  <div class="row">
+                    <div class="col text-center">
+                        <img src="kfc-ad2.jpg" width="250" height="250">
+                        <div>
+                            <input id="optPlate" type="checkbox" value="8 Wing's Plate" class="form-check-input"> 8 Wing's Plate[&#8377;120/-] 
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="kfc-ad.jpg" width="250" height="250">
+                        <div>
+                            <input id="optBucket" type="checkbox" value="8 Wing's Bucket" class="form-check-input"> 8 Wing's Bucket[&#8377;140/-]
+                        </div>
+                    </div> 
+
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col">
+                        <button class="btn btn-danger w-100" onclick="SubmitClick()" data-bs-target="#billsummary" data-bs-toggle="modal"><span class="bi bi-cart"></span>Submit</button>
+
+                    </div>
+                    <div class="modal fade" id="billsummary">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>Order Summary</h3>
+                                    <button class="btn-close" data-bs-dismiss="modal" ></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <dl class="row">
+                                        <dt class="col-3">Customer Name</dt>
+                                        <dd class="col-9" id="lblName">:</dd>
+                                        <dt class="col-3">Mobile</dt>
+                                        <dd class="col-9" id="lblMobile">:</dd>
+                                        <dt class="col-3">Meal Name</dt>
+                                        <dd class="col-9" id="lblMeal">:</dd>
+                                        <dt class="col-3">Ad-On's</dt>
+                                        <dd class="col-9" id="lblAdon">:</dd>
+                                        <dt class="col-3">Total Amount</dt>
+                                        <dd class="col-9" id="lblTotalAmount">:</dd>
+                                    </dl>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-success">Place Order</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+        <script src="jquery.js"></script>
+        <script src="bootstrap.bundle.js"></script>
+
+    </body>
+</html>
